@@ -14,5 +14,5 @@ insert_final_newline = true
 [*.{yml,md}]
 indent_size = 2
 
-[*.sh]
+[{*.sh,Makefile}]
 indent_style = tab
