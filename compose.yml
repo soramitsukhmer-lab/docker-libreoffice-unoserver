@@ -1,6 +1,8 @@
 services:
   libreoffice:
-    image: socheatsok78/libreoffice-unoserver:nightly
+    image: soramitsukhmer-lab/libreoffice-unoserver:nightly
     restart: always
+    ports:
+      - 2003:2003
     # environment:
     #   - UNOSERVER_CMD=unoserver
