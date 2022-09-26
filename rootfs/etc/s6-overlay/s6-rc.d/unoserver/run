@@ -1,0 +1,8 @@
+#!/command/with-contenv sh
+
+if [[ -z "${UNOSERVER_CMD}" ]]; then
+    unoserver
+else
+    echo "INFO:unoserver:Start using custom server command"
+    $UNOSERVER_CMD
+fi
