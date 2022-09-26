@@ -48,3 +48,9 @@ RUN fc-cache -fv \
 ONBUILD RUN fc-cache -fv
 VOLUME [ "/fonts.d" ]
 CMD [ "/docker-cmd.sh" ]
+
+ARG UNOSERVER_REST_API_VERSION=0.1.3
+ADD https://github.com/socheatsok78/unoserver-rest-api/releases/download/v${UNOSERVER_REST_API_VERSION}/unoserver-rest-api-linux /usr/bin/unoserver-rest-api
+RUN chmod +x /usr/bin/unoserver-rest-api
+
+ENV UNOSERVER_CMD="unoserver --user-installation=/etc/libreoffice/4"
