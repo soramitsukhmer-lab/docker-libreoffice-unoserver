@@ -10,9 +10,9 @@ push:
 	docker push ${DOCKER_IMAGE}
 
 run:
-	docker run -it --rm  -p "2003:2003" \
+	docker run -it --rm  -p "2004:2004" \
 		${DOCKER_IMAGE}
 
 shell:
-	docker run -it --rm -p "2003:2003" \
+	docker run -it --rm -p "2004:2004" \
 		${DOCKER_IMAGE} sh
