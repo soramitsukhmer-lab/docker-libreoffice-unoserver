@@ -3,6 +3,6 @@ services:
     image: soramitsukhmer-lab/libreoffice-unoserver:nightly
     restart: always
     ports:
-      - 2003:2003
+      - 2004:2004
     # environment:
     #   - UNOSERVER_CMD=unoserver

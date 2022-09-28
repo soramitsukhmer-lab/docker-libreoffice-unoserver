@@ -42,12 +42,12 @@ ENTRYPOINT ["/init"]
 ARG UNOSERVER_REST_API_VERSION=0.1.5
 ADD https://github.com/socheatsok78/unoserver-rest-api/releases/download/v${UNOSERVER_REST_API_VERSION}/unoserver-rest-api-linux /usr/bin/unoserver-rest-api
 RUN chmod +x /usr/bin/unoserver-rest-api
-
 ADD https://github.com/socheatsok78/unoserver-rest-api/releases/download/v${UNOSERVER_REST_API_VERSION}/s6-overlay-module.tar.zx /tmp
 ADD https://github.com/socheatsok78/unoserver-rest-api/releases/download/v${UNOSERVER_REST_API_VERSION}/s6-overlay-module.tar.zx.sha256 /tmp
 RUN cd /tmp && sha256sum -c *.sha256 && \
     tar -C / -Jxpf /tmp/s6-overlay-module.tar.zx && \
     rm -rf /tmp/*.tar*
+EXPOSE 2004
 
 ENV UNOSERVER_CMD="unoserver --user-installation=/etc/libreoffice"
 
