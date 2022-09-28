@@ -39,7 +39,7 @@ RUN cd /tmp && sha256sum -c *.sha256 && \
     rm -rf /tmp/*.tar*
 ENTRYPOINT ["/init"]
 
-ARG UNOSERVER_REST_API_VERSION=0.1.5
+ARG UNOSERVER_REST_API_VERSION=0.1.6
 ADD https://github.com/socheatsok78/unoserver-rest-api/releases/download/v${UNOSERVER_REST_API_VERSION}/unoserver-rest-api-linux /usr/bin/unoserver-rest-api
 RUN chmod +x /usr/bin/unoserver-rest-api
 ADD https://github.com/socheatsok78/unoserver-rest-api/releases/download/v${UNOSERVER_REST_API_VERSION}/s6-overlay-module.tar.zx /tmp
