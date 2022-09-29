@@ -9,6 +9,18 @@ RUN set -xe \
         bash curl \
     ; rm -rf /var/cache/apk/* /tmp/*
 
+# Install Microsoft TrueType core fonts
+RUN set -xe \
+    ; apk update \
+    ; apk add --no-cache --purge -uU \
+        fontconfig \
+        encodings \
+        mkfontdir \
+        mkfontscale \
+        msttcorefonts-installer \
+    ; rm -rf /var/cache/apk/* /tmp/* \
+    ; update-ms-fonts
+
 ARG LIBREOFFICE_VERSION=
 RUN set -xe \
     ; apk update \
