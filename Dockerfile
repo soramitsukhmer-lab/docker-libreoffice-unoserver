@@ -1,6 +1,7 @@
 FROM adoptopenjdk/openjdk11:jre-11.0.6_10-alpine
 
-ENV LANG en_US.UTF-8
+# Default to UTF-8 file.encoding
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 RUN set -xe \
     ; apk update \
@@ -53,7 +54,6 @@ ENV UNOSERVER_CMD="unoserver --user-installation=/etc/libreoffice"
 
 ADD rootfs /
 RUN fc-cache -fv \
-    && chmod +x /docker-cmd.sh
+    ; chmod +x /docker-cmd.sh
 ONBUILD RUN fc-cache -fv
-VOLUME [ "/fonts.d" ]
 CMD [ "/docker-cmd.sh" ]
