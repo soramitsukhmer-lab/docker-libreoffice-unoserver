@@ -9,6 +9,7 @@ RUN set -xe \
         bash curl \
     ; rm -rf /var/cache/apk/* /tmp/*
 
+
 # Library for configuring and customizing font access
 RUN set -xe \
     ; apk update \

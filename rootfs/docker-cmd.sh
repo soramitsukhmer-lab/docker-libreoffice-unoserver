@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+source /etc/os-release
 
 # And add a trap for CTRL + C
 
@@ -27,6 +28,7 @@ function trap_SIGINT() {
 logv "Main process running pid $PID"
 trap 'trap_SIGINT' SIGINT
 
+logv "$PRETTY_NAME"
 logv "LibreOffice version: $LIBREOFFICE_VERSION"
 logv "Python version: $PYTHON_VERSION"
 
