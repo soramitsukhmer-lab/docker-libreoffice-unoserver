@@ -6,6 +6,9 @@ set -e
 ME=$(basename $0)
 PID=$$
 
+LIBREOFFICE_VERSION=$(libreoffice --version)
+PYTHON_VERSION=$(python --version)
+
 function logv() {
 	echo "$ME [$(date)]: $@ "
 }
@@ -23,5 +26,8 @@ function trap_SIGINT() {
 
 logv "Main process running pid $PID"
 trap 'trap_SIGINT' SIGINT
+
+logv "LibreOffice version: $LIBREOFFICE_VERSION"
+logv "Python version: $PYTHON_VERSION"
 
 while true; do sleep 2; done
