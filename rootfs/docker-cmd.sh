@@ -28,7 +28,7 @@ function trap_SIGINT() {
 logv "Main process running pid $PID"
 trap 'trap_SIGINT' SIGINT
 
-logv "$PRETTY_NAME"
+logv "$NAME version: $VERSION_ID"
 logv "LibreOffice version: $LIBREOFFICE_VERSION"
 logv "Python version: $PYTHON_VERSION"
 
