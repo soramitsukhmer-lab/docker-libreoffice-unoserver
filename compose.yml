@@ -1,8 +1,6 @@
 services:
   libreoffice:
-    image: soramitsukhmer-lab/libreoffice-unoserver:nightly
+    image: ghcr.io/soramitsukhmer-lab/libreoffice-unoserver:main
     restart: always
     ports:
       - 2004:2004
-    # environment:
-    #   - UNOSERVER_CMD=unoserver
