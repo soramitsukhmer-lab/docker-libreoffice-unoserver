@@ -1,3 +1,10 @@
+FROM alpine:3.11 AS lockrun
+
+RUN apk add gcc musl-dev
+ADD http://unixwiz.net/tools/lockrun.c /tmp/lockrun.c
+RUN cd /tmp \
+    ; gcc lockrun.c -o lockrun
+
 FROM alpine:3.11
 
 # BuildFS
@@ -91,3 +98,5 @@ RUN set -xe \
     ; chmod +x /docker-cmd.sh \
     ; fc-cache -fv
 CMD [ "/docker-cmd.sh" ]
+
+COPY --from=lockrun /tmp/lockrun /usr/bin/lockrun
