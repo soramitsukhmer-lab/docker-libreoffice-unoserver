@@ -1,4 +1,4 @@
-DOCKER_REGISTRY=soramitsukhmer-lab
+DOCKER_REGISTRY=035167628910.dkr.ecr.ap-southeast-1.amazonaws.com
 DOCKER_NAME=libreoffice-unoserver
 DOCKER_TAG=nightly
 DOCKER_IMAGE=${DOCKER_REGISTRY}/${DOCKER_NAME}:${DOCKER_TAG}
