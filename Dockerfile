@@ -79,7 +79,7 @@ ENTRYPOINT ["/init"]
 
 
 # Unoserver REST Api
-ARG UNOSERVER_REST_API_VERSION=0.4.0
+ARG UNOSERVER_REST_API_VERSION=0.5.1
 ADD https://github.com/libreoffice-docker/unoserver-rest-api/releases/download/v${UNOSERVER_REST_API_VERSION}/s6-overlay-module.tar.zx /tmp
 ADD https://github.com/libreoffice-docker/unoserver-rest-api/releases/download/v${UNOSERVER_REST_API_VERSION}/s6-overlay-module.tar.zx.sha256 /tmp
 RUN cd /tmp \
