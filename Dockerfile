@@ -1,22 +1,24 @@
-FROM alpine:3.11 AS lockrun
+ARG BASE_IMAGE=alpine:3.16
+
+FROM $BASE_IMAGE AS lockrun
 
 RUN apk add gcc musl-dev
 ADD http://unixwiz.net/tools/lockrun.c /tmp/lockrun.c
 RUN cd /tmp \
     ; gcc lockrun.c -o lockrun
 
-FROM alpine:3.11
+FROM $BASE_IMAGE
+
 
 # BuildFS
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
-ADD buildfs /
 RUN set -xe \
     ; apk update \
     ; apk add --no-cache --purge -uU \
         bash curl tzdata \
         freetype freetype-dev \
-        icu icu-libs \
-        musl musl-dev musl-libintl libc6-compat \
+        icu icu-libs icu-data-full \
+        musl musl-dev musl-locales musl-locales-lang libc6-compat \
     ; rm -rf /var/cache/apk/* /tmp/*
 
 
@@ -30,7 +32,6 @@ RUN set -xe \
         openjdk11-jre-headless \
     ; rm -rf /var/cache/apk/* /tmp/*
 
-
 # Microsoft TrueType core fonts
 RUN set -xe \
     ; apk update \
@@ -38,16 +39,26 @@ RUN set -xe \
         ttf-dejavu \
         msttcorefonts-installer \
     ; rm -rf /var/cache/apk/* /tmp/* \
-    ; update-ms-fonts
+    ; update-ms-fonts \
+    ; ln -s /usr/share/fontconfig/conf.avail/65-khmer.conf /etc/fonts/conf.d/65-khmer.conf
 
 
-# LibreOffice
+# LibreOffice 6 (Khmer Unicode Supported with MS Excel)
+RUN set -xe \
+    ; echo https://dl-cdn.alpinelinux.org/alpine/v3.11/main >> /etc/apk/repositories \
+    ; echo https://dl-cdn.alpinelinux.org/alpine/v3.11/community >> /etc/apk/repositories
 RUN set -xe \
     ; apk update \
-    ; apk add --no-cache --purge -uU libreoffice \
+    ; apk add --no-cache \
+        "libreoffice-common=~6.3" \
+        "libreoffice-calc=~6.3" \
+        "libreoffice-draw=~6.3" \
+        "libreoffice-impress=~6.3" \
+        "libreoffice-writer=~6.3" \
+        "libreoffice-lang-en_us=~6.3" \
     ; rm -rf /var/cache/apk/* /tmp/*
-    # ; apk search -qe 'libreoffice-lang-*' | xargs apk add --no-cache --purge -uU \
 
+ENV LD_LIBRARY_PATH /usr/lib
 ENV URE_BOOTSTRAP "vnd.sun.star.pathname:/usr/lib/libreoffice/program/fundamentalrc"
 ENV PATH "/usr/lib/libreoffice/program:$PATH"
 ENV UNO_PATH "/usr/lib/libreoffice/program"
@@ -96,5 +107,3 @@ RUN set -xe \
     ; chmod +x /docker-cmd.sh \
     ; fc-cache -fv
 CMD [ "/docker-cmd.sh" ]
-
-COPY --from=lockrun /tmp/lockrun /usr/bin/lockrun

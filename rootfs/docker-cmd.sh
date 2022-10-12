@@ -29,7 +29,7 @@ logv "Main process running pid $PID"
 trap 'trap_SIGINT' SIGINT
 
 logv "$NAME version: $VERSION_ID"
-logv "LibreOffice version: $LIBREOFFICE_VERSION"
 logv "Python version: $PYTHON_VERSION"
+logv "LibreOffice version: $LIBREOFFICE_VERSION"
 
 while true; do sleep 2; done
