@@ -107,3 +107,6 @@ RUN set -xe \
     ; chmod +x /docker-cmd.sh \
     ; fc-cache -fv
 CMD [ "/docker-cmd.sh" ]
+
+# lockrun
+COPY --from=lockrun /tmp/lockrun /usr/bin/lockrun
