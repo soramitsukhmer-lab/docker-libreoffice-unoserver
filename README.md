@@ -9,11 +9,15 @@ The LibreOffice with unoserver on Docker
 
 ### Usage
 
-This image uses the [`alpine`](https://hub.docker.com/_/alpine) as base images.
+This image uses the [`libreofficedocker/libreoffice-unoserver:3.11`](https://hub.docker.com/r/libreofficedocker/libreoffice-unoserver) as base images.
 
 ```
 docker pull soramitsukhmer-lab/libreoffice-unoserver:latest
 ```
+
+> **Warning**
+> 
+> For compatibility with Khmer Unicode (for Microsoft Office documents) only Alpine v3.11 appear to be able to output PDF document with the correct fonts and sizes.
 
 ### REST API
 
