@@ -13,6 +13,5 @@ ADD rootfs /
 RUN set -xe \
     ; chmod +x /docker-cmd.sh \
     ; fc-cache -fv
-CMD [ "/docker-cmd.sh" ]
 COPY --from=lockrun /tmp/lockrun /usr/bin/lockrun
 ENV UNOSERVER_CMD="unoserver --user-installation=/etc/libreoffice"
