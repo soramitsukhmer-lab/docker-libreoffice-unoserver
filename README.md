@@ -1,34 +1,30 @@
-# libreoffice-unoserver
+## About
 
 The LibreOffice with unoserver on Docker
 
-## About
+## Features
 
-This uses the [`adoptopenjdk/openjdk11:jre-11.0.6_10-alpine`](https://hub.docker.com/r/adoptopenjdk/openjdk11) as base images.
+- Include a sets of Khmer Unicode fonts such as `kantumruy`, `kdamthmor`, `khmer`, `khmeros` and `khmeros-crosextra`. You can add more fonts to this directory `rootfs/usr/share/fonts/truetype`.
+- Include a custom version of `unoserver` from [socheatsok78-lab/unoserver](https://github.com/socheatsok78-lab/unoserver).
 
-The Alpine version: `3.11.5`
+### Usage
 
-**NOTE**: Please fork or create a new project from this template to build your own image.
-
-### Pre-built image
-
-We do not provide stable pre-built images, but we have an unstable `nightly` image for testing.
+This image uses the [`alpine`](https://hub.docker.com/_/alpine) as base images.
 
 ```
-libreofficedocker/libreoffice-unoserver:nightly
+docker pull soramitsukhmer-lab/libreoffice-unoserver:latest
 ```
 
 ### REST API
 
-This image do not shipped with REST API for unoserver by default.
+This image shipped with REST API for unoserver by default.
 
-Please use https://github.com/libreoffice-docker/unoserver-rest-api.
+See https://github.com/libreoffice-docker/unoserver-rest-api for more information.
 
-### Environment Variables
-
-| Variable      | Default   | Required | Description               |
-| ------------- | --------- | -------- | ------------------------- |
-| UNOSERVER_CMD | unoserver |          | Set the unoserver command |
+> **⚠️ Caution ⚠️**
+>
+> It is important to know that the  REST API layer DOES NOT provide any type of security whatsoever.
+> It is NOT RECOMMENDED to expose this container image to the internet.
 
 ## License
 
