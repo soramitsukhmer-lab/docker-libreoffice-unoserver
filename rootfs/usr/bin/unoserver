@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# https://github.com/socheatsok78/unoserver/blob/add-user-installation-flag/src/unoserver/server.py
+# https://github.com/libreofficedocker/unoserver/blob/master/src/unoserver/server.py
 import argparse
 import logging
 import os
@@ -16,15 +16,7 @@ class UnoServer:
     def __init__(self, interface="127.0.0.1", port="2002", user_installation=None):
         self.interface = interface
         self.port = port
-
-        if user_installation is None:
-            with tempfile.TemporaryDirectory() as tmpuserdir:
-                # Store this as an attribute, it helps testing
-                # In windows if the path is invalid causes bootstrap.ini strange corrupt error
-                self.tmp_uri = Path(tmpuserdir).as_uri()
-                self.user_installation = self.tmp_uri
-        else:
-            self.user_installation = Path(user_installation).as_uri()
+        self.user_installation = user_installation
 
     def start(self, executable="libreoffice"):
         logger.info("Starting unoserver.")
@@ -89,39 +81,41 @@ def main():
     parser.add_argument(
         "--user-installation",
         default=None,
-        help="The path to the LibreOffice user profile"
+        help="The path to the LibreOffice user profile",
     )
     args = parser.parse_args()
 
-    server = UnoServer(
-        args.interface,
-        args.port,
-        args.user_installation,
-    )
+    with tempfile.TemporaryDirectory() as tmpuserdir:
+        user_installation = Path(tmpuserdir).as_uri()
 
-    # If it's daemonized, this returns the process.
-    # It returns 0 of getting killed in a normal way.
-    # Otherwise it returns 1 after the process exits.
-    process = server.start(executable=args.executable)
-    pid = process.pid
+        if args.user_installation is not None:
+            user_installation = Path(args.user_installation).as_uri()
 
-    logger.info(f"Server PID: {pid}")
+        server = UnoServer(args.interface, args.port, user_installation)
 
-    if args.daemon:
-        return process
+        # If it's daemonized, this returns the process.
+        # It returns 0 of getting killed in a normal way.
+        # Otherwise it returns 1 after the process exits.
+        process = server.start(executable=args.executable)
+        pid = process.pid
 
-    process.wait()
+        logger.info(f"Server PID: {pid}")
 
-    try:
-        # Make sure it's really dead
-        os.kill(pid, 0)
-        # It was killed
-        return 0
-    except OSError as e:
-        if e.errno == 3:
-            # All good, it was already dead.
+        if args.daemon:
+            return process
+
+        process.wait()
+
+        try:
+            # Make sure it's really dead
+            os.kill(pid, 0)
+            # It was killed
             return 0
-        raise
+        except OSError as e:
+            if e.errno == 3:
+                # All good, it was already dead.
+                return 0
+            raise
 
 
 if __name__ == "__main__":
