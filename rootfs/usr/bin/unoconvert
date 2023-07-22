@@ -206,16 +206,13 @@ class UnoConverter:
             sheets = document.getSheets()
             for sheet in sheets:
                 pageStyle = document.StyleFamilies.getByName("PageStyles").getByName(sheet.PageStyle)
-                pageStyle.CenterHorizontally = True
 
-                # Set landscape mode
                 if landscape:
-                    pageStyle.IsLandscape = True
-                    # Swap dimension
                     newWidth = pageStyle.Height
                     newHeight = pageStyle.Width
                     pageStyle.Width = newWidth
                     pageStyle.Height = newHeight
+                    pageStyle.IsLandscape = True
             # End Custom logic =====
 
             if outpath:
