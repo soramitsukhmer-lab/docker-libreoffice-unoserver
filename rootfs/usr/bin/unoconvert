@@ -125,6 +125,7 @@ class UnoConverter:
         filter_options=[],
         update_index=True,
         landscape=False,
+        center_page=None
     ):
         """Converts a file from one type to another
 
@@ -206,6 +207,14 @@ class UnoConverter:
             sheets = document.getSheets()
             for sheet in sheets:
                 pageStyle = document.StyleFamilies.getByName("PageStyles").getByName(sheet.PageStyle)
+
+                if center_page == "horizontal":
+                    pageStyle.CenterHorizontally = True
+                elif center_page == "vertical":
+                    pageStyle.CenterVertically = True
+                elif center_page == "both":
+                    pageStyle.CenterHorizontally = True
+                    pageStyle.CenterVertically = True
 
                 if landscape:
                     newWidth = pageStyle.Height
@@ -336,6 +345,9 @@ def main():
     parser.add_argument(
         "--landscape", action="store_true", help="Set the document orientation to landscape mode"
     )
+    parser.add_argument(
+        "--center-page", default=None, help="Set page centering to \"horizontal\", \"vertical\" or \"both\""
+    )
     parser.add_argument("--port", default="2002", help="The port used by the server")
     args = parser.parse_args()
     converter = UnoConverter(args.interface, args.port)
@@ -356,6 +368,7 @@ def main():
             filter_options=args.filter_options,
             update_index=args.update_index,
             landscape=args.landscape,
+            center_page=args.center_page
         )
     else:
         result = converter.convert(
@@ -366,6 +379,7 @@ def main():
             filter_options=args.filter_options,
             update_index=args.update_index,
             landscape=args.landscape,
+            center_page=args.center_page
         )
 
     if args.outfile is None:
